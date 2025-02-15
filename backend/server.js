@@ -1,14 +1,18 @@
+// backend/server.js
 const express = require('express');
+const os = require('os');
 const cors = require('cors');
+
 const app = express();
 const PORT = 5000;
 
 app.use(cors());
 
-app.get('/api/message', (req, res) => {
-    res.json({ message: "Hello, it's working!" });
+app.get('/', (req, res) => {
+    const hostname = os.hostname();
+    res.send(`Hi this is from ${hostname}, frontend`);
 });
 
 app.listen(PORT, () => {
-    console.log(`Backend running on http://localhost:${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 });
