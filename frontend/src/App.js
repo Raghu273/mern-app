@@ -1,21 +1,37 @@
-import React, { useEffect, useState } from 'react';
+// frontend/src/App.js
+import React, { useState, useEffect } from 'react';
 
-function App() {
-    const [message, setMessage] = useState('');
+const App = () => {
+    const [message, setMessage] = useState('Loading...');
+    const [backendUrl, setBackendUrl] = useState('');
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/message')
-            .then(response => response.json())
-            .then(data => setMessage(data.message))
-            .catch(error => console.error('Error fetching message:', error));
+        // Determine the environment
+        const isLocal = window.location.hostname === 'localhost';
+	    const host = window.location.hostname;
+
+        // Set backend URLs
+        const backends = isLocal
+            ? ['http://localhost:5000', 'http://localhost:5001'] // Local development URLs
+            : [`http://${host}:5000`, `http://${host}:5001`]; //  cloud IPs
+
+        // Pick a backend dynamically
+        const randomBackend = backends[Math.floor(Math.random() * backends.length)];
+        setBackendUrl(randomBackend);
+
+        // Fetch data from the selected backend
+        fetch(randomBackend)
+            .then((response) => response.text())
+            .then((data) => setMessage(data))
+            .catch((error) => setMessage('Error fetching message.'));
     }, []);
 
     return (
-        <div>
-            <h1>Hello from backend:</h1>
-            <p>{message}</p>
+        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+            <h1>{message}</h1>
+            <p>Fetched from: {backendUrl}</p>
         </div>
     );
-}
+};
 
 export default App;
