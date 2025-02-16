@@ -1,16 +1,20 @@
 {
-  "name": "backend",
+  "name": "my-express-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.21.2"
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
   }
 }
