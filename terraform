@@ -1,0 +1,20 @@
+provider "aws" {
+  access_key = "//"
+  secret_key = "//"
+  region     = "//"
+}
+
+resource "aws_instance" "target_server" {
+  ami           = "ami-00bb6a80f01f03502"  # Replace with your desired AMI ID
+  instance_type = "t2.medium"  # Change as per your requirement
+  key_name      = "//"  # Replace with your SSH key name
+
+  tags = {
+    Name = "TargetServer"
+  }
+}
+
+// after saving the file
+//terrafoem init
+//terraform apply
+
