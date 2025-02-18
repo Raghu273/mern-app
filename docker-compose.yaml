@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: raghurk/frontend:${BUILD_NUMBER}  # Use build number for versioning
+    container_name: frontend
+    restart: always
+    ports:
+      - "3000:3000"  # Expose frontend on port 3000
+    depends_on:
+      - backend  # Ensure backend starts first
+    environment:
+      - REACT_APP_API_URL=http://backend:5000  # Adjust backend API URL
+
+  backend:
+    image: raghurk/backend:${BUILD_NUMBER}  # Use build number for versioning
+    container_name: backend
+    restart: always
+    ports:
+      - "5000:5000"  # Expose backend on port 5000
+    environment:
+      - NODE_ENV=production  # Set environment to production
