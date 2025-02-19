@@ -1,0 +1,51 @@
+--
+- name: Setup target EC2 server
+  hosts: target_server
+  tasks:
+    - name: Example task
+      shell: echo "Setting up server"
+
+
+  tasks:
+    - name: Update and upgrade apt packages
+      become: yes
+      apt:
+        update_cache: yes
+        upgrade: yes
+        cache_valid_time: 3600
+
+    - name: Install Node.js
+      become: yes
+      apt:
+        name: nodejs
+        state: present
+
+    - name: Install npm
+      become: yes
+      apt:
+        name: npm
+        state: present
+
+    - name: Install Docker
+      become: yes
+      apt:
+        name: docker.io
+        state: present
+    - name: Install Docker Compose
+      become: yes
+      apt:
+        name: docker-compose
+        state: present
+
+    - name: Add user to docker group
+      become: yes
+      user:
+        name: ubuntu
+        group: docker
+
+    - name: Start Docker service
+      become: yes
+      service:
+        name: docker
+        state: started
+        enabled: yes
